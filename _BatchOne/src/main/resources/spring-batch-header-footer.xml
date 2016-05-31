@@ -62,6 +62,7 @@
 
 					</bean>
 				</property>
+<!-- 				<property name="encoding" value="ISO8859_1"></property> -->
 			</bean>
 		</property>
 		<property name="footerCallback" ref="userHeaderFooterWriter" />
@@ -75,15 +76,21 @@
 	<!-- Optional JobExecutionListener to perform business logic before and 
 		after the job -->
 	<bean id="jobListener" class="me.ahmed.batch.listener.UserJobListener" />
+	
+	<bean id="logListener" class="me.ahmed.batch.listener.ItemFailureLoggerListener" />
 
 	<!-- Step will need a transaction manager -->
 	<bean id="transactionManager"
 		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
 
+	<bean name="helloWorldTasklet" class="me.ahmed.batch.tasklet.HelloWorldTasklet"/>
 
 	<!-- Actual Job -->
 	<batch:job id="userJob1">
-		<batch:step id="step1">
+		<batch:step id="step1" next="step2">
+	        <batch:tasklet ref="helloWorldTasklet" />
+	    </batch:step>
+		<batch:step id="step2">
 			<batch:tasklet transaction-manager="transactionManager">
 				<batch:chunk reader="userReader" writer="userWriter"
 					processor="itemProcessor" commit-interval="10" />
@@ -91,6 +98,7 @@
 		</batch:step>
 		<batch:listeners>
 			<batch:listener ref="jobListener" />
+			<batch:listener ref="logListener" />
 		</batch:listeners>
 	</batch:job>
 
