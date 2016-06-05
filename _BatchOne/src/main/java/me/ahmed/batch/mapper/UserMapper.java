@@ -3,9 +3,9 @@ package me.ahmed.batch.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.jdbc.core.RowMapper;
-
 import me.ahmed.batch.model.User;
+
+import org.springframework.jdbc.core.RowMapper;
 
 public class UserMapper implements RowMapper<User> {
 
@@ -23,7 +23,9 @@ public class UserMapper implements RowMapper<User> {
 		user.setVersion(rs.getInt("VERSION"));
 		user.setStatut(rs.getString("STATUT"));
 		user.setCodeBanque(rs.getString("CODE_BANQUE_ASSOCIE"));
-		
+
 		return user;
+
 	}
+
 }

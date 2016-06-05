@@ -53,6 +53,7 @@
 	<!-- Optional JobExecutionListener to perform business logic before and 
 		after the job -->
 	<bean id="jobListener" class="me.ahmed.batch.listener.UserJobListener" />
+	<bean id="logListener" class="me.ahmed.batch.listener.ItemFailureLoggerListener" />
 
 	<!-- Optional ItemProcessor to perform business logic/filtering on the input 
 		records -->
@@ -72,6 +73,7 @@
 		</batch:step>
 		<batch:listeners>
 			<batch:listener ref="jobListener" />
+			<batch:listener ref="logListener" />
 		</batch:listeners>
 	</batch:job>
 

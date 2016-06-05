@@ -11,5 +11,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 		<property name="username" value="adria1" />
 		<property name="password" value="adria2016" />
 	</bean>
-
+	<bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+		
 </beans>   

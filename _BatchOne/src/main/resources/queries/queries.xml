@@ -4,7 +4,10 @@
 		SELECT ID , USERNAME , NOM , PRENOM , EMAIL , 
 		TELEPHONE_PRINCIPAL , STATUT , 
 		CREATEDON , CODE_BANQUE_ASSOCIE ,VERSION 
-		FROM UTILISATEUR
+		FROM UTILISATEUR WHERE CODE_BANQUE_ASSOCIE=:codeBanque
 	</entry>
-
+	<entry key="user.commit-interval">
+		10
+	</entry>
+	
 </properties> 
