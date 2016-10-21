@@ -11,14 +11,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import me.ahmed.projects.jersey.dto.LoginDTO;
-import me.ahmed.projects.jersey.dto.LoginResponseDTO;
-import me.ahmed.projects.jersey.service.LoginService;
-import me.ahmed.projects.jersey.service.OTPService;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import me.ahmed.projects.jersey.dto.LoginDTO;
+import me.ahmed.projects.jersey.dto.LoginResponseDTO;
+import me.ahmed.projects.jersey.exception.ResponseException;
+import me.ahmed.projects.jersey.service.LoginService;
+import me.ahmed.projects.jersey.service.OTPService;
 
 @Path("login")
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,19 +35,33 @@ public class LoginResource {
 	private OTPService otpService;
 
 	@POST
-	@Path("/")
-	public LoginResponseDTO autenticate(LoginDTO login) {
+	@Path("/authenticate")
+	public LoginResponseDTO autenticate(LoginDTO login)
+			throws InvalidKeyException, SignatureException, NoSuchAlgorithmException {
 		LOGGER.info("LOGIN FOR USER  " + login.getUsername());
-		return loginService.authenticate(login);
+		try {
+			return loginService.authenticate(login);
+		} catch (ResponseException e) {
+			return new LoginResponseDTO(e.getCode(), e.getMessage(), "", "");
+		}
 	}
 
 	@GET
 	@Path("/sessionKey/{idUser}")
 	public String getSessionKey(@PathParam("idUser") Long id)
-			throws InvalidKeyException, SignatureException,
-			NoSuchAlgorithmException {
+			throws InvalidKeyException, SignatureException, NoSuchAlgorithmException {
 		LOGGER.info("Get  USER session key");
 		return otpService.generateHachOTP(id);
 	}
+	
+	@POST
+	@Path("/forgotPassword")
+	public LoginResponseDTO forgotPassword(LoginDTO login)
+			throws InvalidKeyException, SignatureException, NoSuchAlgorithmException {
+		LOGGER.info("Forgot password for  : " + login.getUsername());
+		return loginService.forgotPassword(login.getUsername());
+	}
+	
+	
 
 }

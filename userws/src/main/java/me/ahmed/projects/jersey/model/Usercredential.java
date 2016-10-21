@@ -3,6 +3,8 @@ package me.ahmed.projects.jersey.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class Usercredential implements Serializable {
 	@Id
 	@SequenceGenerator(name = "USERCREDENTIALS_USERID_GENERATOR")
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "USERCREDENTIALS_USERID_GENERATOR")
+	@Column(name="ID")
 	private Long userid;
 
 	private int consecutivefailedloginattempts;
@@ -37,7 +40,7 @@ public class Usercredential implements Serializable {
 	private int passworddigest;
 
 	// bi-directional one-to-one association to Userr
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "USERID")
 	private User user;
 

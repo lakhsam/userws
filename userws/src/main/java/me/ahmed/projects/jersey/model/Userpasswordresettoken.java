@@ -1,34 +1,41 @@
 package me.ahmed.projects.jersey.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 /**
  * The persistent class for the USERPASSWORDRESETTOKEN database table.
  * 
  */
 @Entity
-@NamedQuery(name="Userpasswordresettoken.findAll", query="SELECT u FROM Userpasswordresettoken u")
+@NamedQuery(name = "Userpasswordresettoken.findAll", query = "SELECT u FROM Userpasswordresettoken u")
 public class Userpasswordresettoken implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="USERPASSWORDRESETTOKEN_USERPASSWORDRESETTOKENID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="USERPASSWORDRESETTOKEN_USERPASSWORDRESETTOKENID_GENERATOR")
+	@SequenceGenerator(name = "USERPASSWORDRESETTOKEN_USERPASSWORDRESETTOKENID_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "USERPASSWORDRESETTOKEN_USERPASSWORDRESETTOKENID_GENERATOR")
 	private long userpasswordresettokenid;
 
-	private Timestamp createddtm;
+	private Date createddtm;
 
-	private Timestamp expirationdtm;
+	private Date expirationdtm;
 
 	private BigDecimal temporarypassworddigest;
 
-	//bi-directional many-to-one association to Userr
+	// bi-directional many-to-one association to Userr
 	@ManyToOne
-	@JoinColumn(name="USERID")
+	@JoinColumn(name = "USERID")
 	private User user;
 
 	public Userpasswordresettoken() {
@@ -42,19 +49,19 @@ public class Userpasswordresettoken implements Serializable {
 		this.userpasswordresettokenid = userpasswordresettokenid;
 	}
 
-	public Timestamp getCreateddtm() {
+	public Date getCreateddtm() {
 		return this.createddtm;
 	}
 
-	public void setCreateddtm(Timestamp createddtm) {
+	public void setCreateddtm(Date createddtm) {
 		this.createddtm = createddtm;
 	}
 
-	public Timestamp getExpirationdtm() {
+	public Date getExpirationdtm() {
 		return this.expirationdtm;
 	}
 
-	public void setExpirationdtm(Timestamp expirationdtm) {
+	public void setExpirationdtm(Date expirationdtm) {
 		this.expirationdtm = expirationdtm;
 	}
 

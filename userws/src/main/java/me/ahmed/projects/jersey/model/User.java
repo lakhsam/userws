@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,8 @@ public class User implements Serializable {
 	@Id
 	@SequenceGenerator(name = "USERR_USERID_GENERATOR")
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "USERR_USERID_GENERATOR")
-	private long userid;
+	@Column(name="ID")
+	private Long userid;
 
 	private Date createddtm;
 
@@ -49,7 +51,7 @@ public class User implements Serializable {
 	private List<Employee> employees;
 
 	// bi-directional one-to-one association to Usercredential
-	@OneToOne(mappedBy = "user",cascade= CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Usercredential usercredential;
 
 	// bi-directional many-to-one association to Userpasswordresettoken
@@ -69,11 +71,11 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public long getUserid() {
+	public Long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(long userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
